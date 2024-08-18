@@ -1,3 +1,5 @@
+import TaskProgress from "@/components/task-progress/TaskProgress"
+
 export default function Page() {
-    return <p>Task Progress</p>
+    return <TaskProgress />
   }

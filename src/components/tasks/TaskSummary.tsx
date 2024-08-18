@@ -28,7 +28,7 @@ const TaskSummary = (): JSX.Element => {
         <Link href="/task-list" className='p-4 bg-cyan-600 text-white rounded-lg'>
           See Your Task List
         </Link>
-        <Link href="/progress-management" className='p-4 bg-cyan-600 text-white rounded-lg'>
+        <Link href="/task-progress" className='p-4 bg-cyan-600 text-white rounded-lg'>
           Manage Your Task Progress
         </Link>
       </div>
