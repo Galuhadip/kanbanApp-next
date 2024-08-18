@@ -1,5 +1,6 @@
 import { TASK_PROGRESS_ID } from '@/constants'
 import type { Task } from '@/types'
+import TaskIcon from '../TaskIcon'
 
 interface TaskCardProps {
   task: Task
@@ -10,7 +11,8 @@ const TaskCard = ({ task }: TaskCardProps): JSX.Element => {
   return (
     <div className="bg-green-200 p-6 rounded-xl my-2 flex flex-col gap-y-2 text-xl relative">
       <div className="flex justify-between">
-        <div className="material-icons">check_circle</div>
+      <TaskIcon task={task} />
+        {/* <div className="material-icons">check_circle</div> */}
         <div className="material-icons cursor-pointer">
           more_vert
         </div>
