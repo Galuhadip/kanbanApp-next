@@ -1,6 +1,7 @@
 import { Inter } from 'next/font/google'
 import '@/app/globals.css'
 import SideMenu from '@/components/SideMenu'
+import RecoilProvider from '@/components/RecoilProvider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -18,7 +19,7 @@ export default function RootLayout({
   
         <body className={`flex ${inter.className}`}>
             <SideMenu />
-          {children}
+            <RecoilProvider>{children}</RecoilProvider>
         </body>
       </html>
     )

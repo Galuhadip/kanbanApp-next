@@ -1,3 +1,5 @@
+import TaskSummary from "@/components/tasks/TaskSummary";
+
 export default function Page() {
-    return <p>Home</p>
+    return <TaskSummary />
   }
