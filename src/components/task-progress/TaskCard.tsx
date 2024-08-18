@@ -1,3 +1,4 @@
+import { TASK_PROGRESS_ID } from '@/constants'
 import type { Task } from '@/types'
 
 interface TaskCardProps {
@@ -5,7 +6,7 @@ interface TaskCardProps {
 }
 
 const TaskCard = ({ task }: TaskCardProps): JSX.Element => {
-  const isStarted = task.progressOrder === 1
+  const isStarted = task.progressOrder === TASK_PROGRESS_ID.NOT_STARTED
   return (
     <div className="bg-green-200 p-6 rounded-xl my-2 flex flex-col gap-y-2 text-xl relative">
       <div className="flex justify-between">
@@ -22,12 +23,12 @@ const TaskCard = ({ task }: TaskCardProps): JSX.Element => {
         <p>Due on {task.dueDate}</p>
       </div>
       <div className={`flex ${isStarted ? 'justify-end' : 'justify-between'}`}>
-        {task.progressOrder !== 1 && (
+        {task.progressOrder !== TASK_PROGRESS_ID.NOT_STARTED && (
           <button className="material-icons">
             chevron_left
           </button>
         )}
-        {task.progressOrder !== 4 && (
+        {task.progressOrder !== TASK_PROGRESS_ID.COMPLETED && (
           <button className="material-icons">
             chevron_right
           </button>
