@@ -6,10 +6,33 @@ import { TASK_PROGRESS_ID } from '@/constants'
 interface useTaskActionType {
   completeTask: (taskId: number) => void
   moveTaskCard: (taskId: number, directionNumber: 1 | -1) => void
+
+  addTask: (
+        title: string,
+        detail: string,
+        dueDate: string,
+        progressOrder: number,
+      ) => void
 }
 
 export const useTasksAction = (): useTaskActionType => {
   const [tasks, setTasks] = useRecoilState<Task[]>(tasksState)
+
+  const addTask = (
+        title: string,
+        detail: string,
+        dueDate: string,
+        progressOrder: number,
+      ): void => {
+        const newTask: Task = {
+          id: (tasks[tasks.length - 1].id || 0) + 1,
+          title,
+          detail,
+          dueDate,
+          progressOrder,
+        }
+        setTasks([...tasks, newTask])
+      }
 
   const completeTask = (taskId: number): void => {
     const updatedTasks: Task[] = tasks.map((task) =>
@@ -29,5 +52,6 @@ export const useTasksAction = (): useTaskActionType => {
   return {
     completeTask,
     moveTaskCard,
+    addTask,
   }
 }
