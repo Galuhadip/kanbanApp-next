@@ -6,7 +6,7 @@ import TaskModal from '../TaskModal'
 
 interface TaskColumnProps {
   columnTitle: string
-  columnId?: number
+  columnId: number
   tasks: Task[]
 }
 
@@ -28,7 +28,8 @@ const TaskColumn = ({ columnTitle, tasks, columnId }: TaskColumnProps): JSX.Elem
           headingTitle="Add your task"
           type={TASK_MODAL_TYPE.ADD} // Ditambahkan
           setIsModalOpen={setIsModalOpen} 
-          defaultProgressOrder={TASK_PROGRESS_ID.NOT_STARTED}
+          defaultProgressOrder={columnId} 
+          
         />
       )}
       <div>
