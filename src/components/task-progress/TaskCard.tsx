@@ -1,6 +1,9 @@
 import { TASK_PROGRESS_ID } from '@/constants'
 import type { Task } from '@/types'
 import TaskIcon from '../TaskIcon'
+import { useRecoilState } from 'recoil'
+import { tasksState } from '@/features/taskAtoms'
+
 
 interface TaskCardProps {
   task: Task
@@ -8,6 +11,20 @@ interface TaskCardProps {
 
 const TaskCard = ({ task }: TaskCardProps): JSX.Element => {
   const isStarted = task.progressOrder === TASK_PROGRESS_ID.NOT_STARTED
+  const [tasks, setTasks] = useRecoilState<Task[]>(tasksState)
+
+  const moveTaskCard = (taskId: number, directionNumber: 1 | -1): void => {
+    
+     
+    const updatedTasks: Task[] = tasks.map((item) =>
+      item.id === taskId ? { ...item, progressOrder: item.progressOrder+directionNumber } : item,
+    )
+    setTasks(updatedTasks)
+    console.log(tasks)
+    console.log(updatedTasks)
+
+  }
+
   return (
     <div className="bg-green-200 p-6 rounded-xl my-2 flex flex-col gap-y-2 text-xl relative">
       <div className="flex justify-between">
@@ -26,12 +43,19 @@ const TaskCard = ({ task }: TaskCardProps): JSX.Element => {
       </div>
       <div className={`flex ${isStarted ? 'justify-end' : 'justify-between'}`}>
         {task.progressOrder !== TASK_PROGRESS_ID.NOT_STARTED && (
-          <button className="material-icons">
+          <button className="material-icons" 
+          onClick={(): void => {
+            moveTaskCard(task.id, -1 ) // Ditambahkan
+          }}
+          >
             chevron_left
           </button>
         )}
         {task.progressOrder !== TASK_PROGRESS_ID.COMPLETED && (
-          <button className="material-icons">
+          <button className="material-icons"
+          onClick={(): void => {
+            moveTaskCard(task.id, 1 ) // Ditambahkan
+          }}>
             chevron_right
           </button>
         )}

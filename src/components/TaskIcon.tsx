@@ -11,6 +11,7 @@ const TaskIcon = ({ task }: TaskIconProps) => {
   const isProgressCompleted = task.progressOrder === TASK_PROGRESS_ID.COMPLETED
 
   const [tasks, setTasks] = useRecoilState<Task[]>(tasksState)
+  
 
   const completeTask = (taskId: number): void => {
     const updatedTasks: Task[] = tasks.map((task) =>
@@ -18,6 +19,8 @@ const TaskIcon = ({ task }: TaskIconProps) => {
     )
     setTasks(updatedTasks)
   }
+
+  
 
 
   return (
@@ -29,6 +32,7 @@ const TaskIcon = ({ task }: TaskIconProps) => {
     >
       check_circle
     </span>
+
   )
 }
 
