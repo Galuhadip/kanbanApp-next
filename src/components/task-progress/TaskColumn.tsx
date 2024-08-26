@@ -3,7 +3,7 @@ import type { Task } from '@/types'
 
 interface TaskColumnProps {
   columnTitle: string
-  columnId: number
+  columnId?: number
   tasks: Task[]
 }
 
