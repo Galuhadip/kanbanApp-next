@@ -27,4 +27,5 @@ export const TASK_PROGRESS_STATUS = {
   export const TASK_MODAL_TYPE = {
       ADD: 'add',
       EDIT: 'edit',
+      DELETE: 'delete',
     }

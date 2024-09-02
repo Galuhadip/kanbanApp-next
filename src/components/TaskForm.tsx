@@ -4,24 +4,28 @@ import type { Task } from '@/types'
 import { useTasksAction } from '@/hooks/useTasksAction'
 
 interface TaskFormProps {
+    task?: Task
     type: string
     defaultProgressOrder: number
     setIsModalOpen: Dispatch<SetStateAction<boolean>> // Ditambahkan
 }
 
-const TaskForm = ({ type, defaultProgressOrder, setIsModalOpen }: TaskFormProps): JSX.Element => {
-    const [title, setTitle] = useState<string>('')
-    const [detail, setDetail] = useState<string>('')
-    const [dueDate, setDueDate] = useState<string>('')
+const TaskForm = ({ type, defaultProgressOrder, setIsModalOpen, task }: TaskFormProps): JSX.Element => {
+    const [title, setTitle] = useState<string>(task?.title as string)
+    const [detail, setDetail] = useState<string>(task?.detail as string)
+    const [dueDate, setDueDate] = useState<string>(task?.dueDate as string)
     const [progressOrder, setProgressOrder] = useState<number>(defaultProgressOrder)
 
-    const { addTask } = useTasksAction()
+    const { addTask, editTask, } = useTasksAction()
     const handleSubmit = (): void => {
             if (type === TASK_MODAL_TYPE.ADD) {
               addTask(title, detail, dueDate, progressOrder)
               setIsModalOpen(false)
-            }
+            } else if (type === TASK_MODAL_TYPE.EDIT && task) {
+            editTask(task.id, title, detail, dueDate, progressOrder)
+            setIsModalOpen(false)
           }
+    }
 
     return (
         <form className="text-2xl flex flex-col gap-y-4">

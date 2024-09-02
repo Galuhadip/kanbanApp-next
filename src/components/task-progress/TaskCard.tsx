@@ -4,15 +4,18 @@ import TaskIcon from '../TaskIcon'
 import { useRecoilState } from 'recoil'
 import { tasksState } from '@/features/taskAtoms'
 import { useTasksAction } from '@/hooks/useTasksAction'
+import TaskMenu from '../TaskMenu'
+import { useState } from 'react'
 
 
 interface TaskCardProps {
   task: Task
+  
 }
 
 const TaskCard = ({ task }: TaskCardProps): JSX.Element => {
   const { moveTaskCard } = useTasksAction()
-  
+  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false)
   const isStarted = task.progressOrder === TASK_PROGRESS_ID.NOT_STARTED
 
   return (
@@ -20,11 +23,16 @@ const TaskCard = ({ task }: TaskCardProps): JSX.Element => {
       <div className="flex justify-between">
       <TaskIcon task={task} />
         {/* <div className="material-icons">check_circle</div> */}
-        <div className="material-icons cursor-pointer">
+        <div className="material-icons cursor-pointer"
+        onClick={(): void => {
+          setIsMenuOpen(true) // Ditambahkan
+        }}
+        >
           more_vert
         </div>
       </div>
       <p className="text-3xl font-medium mt-2">{task.title}</p>
+      {isMenuOpen && <TaskMenu setIsMenuOpen={setIsMenuOpen} task={task} taskId={task.id} deleteTask={task.id} />}
       <div>
         <p>{task.detail}</p>
       </div>

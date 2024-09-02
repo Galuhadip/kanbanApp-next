@@ -8,31 +8,70 @@ interface useTaskActionType {
   moveTaskCard: (taskId: number, directionNumber: 1 | -1) => void
 
   addTask: (
-        title: string,
-        detail: string,
-        dueDate: string,
-        progressOrder: number,
-      ) => void
+    title: string,
+    detail: string,
+    dueDate: string,
+    progressOrder: number,
+  ) => void
+
+  editTask: (
+    taskId: number,
+    title: string,
+    detail: string,
+    dueDate: string,
+    progressOrder: number,
+  ) => void
+
+  deleteTask: (
+    taskId: number,
+  ) => void
 }
+
+
 
 export const useTasksAction = (): useTaskActionType => {
   const [tasks, setTasks] = useRecoilState<Task[]>(tasksState)
 
   const addTask = (
-        title: string,
-        detail: string,
-        dueDate: string,
-        progressOrder: number,
-      ): void => {
-        const newTask: Task = {
-          id: (tasks[tasks.length - 1].id || 0) + 1,
-          title,
-          detail,
-          dueDate,
-          progressOrder,
-        }
-        setTasks([...tasks, newTask])
-      }
+    title: string,
+    detail: string,
+    dueDate: string,
+    progressOrder: number,
+  ): void => {
+    const newTask: Task = {
+      id: (tasks[tasks.length - 1].id || 0) + 1,
+      title,
+      detail,
+      dueDate,
+      progressOrder,
+    }
+    setTasks([...tasks, newTask])
+  }
+
+  const editTask = (
+    taskId: number,
+    title: string,
+    detail: string,
+    dueDate: string,
+    progressOrder: number,
+  ): void => {
+    const updatedTask: Task[] = tasks.map((task) =>
+      task.id === taskId ? { ...task, title, detail, dueDate, progressOrder } : task,
+    )
+    setTasks([ ...updatedTask])
+  }
+
+  const deleteTask = (taskId: number): void => {
+    const deleteTasks = tasks.filter((task) => {
+      if (task.id === taskId) {
+        return false
+      }
+      return true
+    })
+    setTasks(deleteTasks)
+  }
+
+
 
   const completeTask = (taskId: number): void => {
     const updatedTasks: Task[] = tasks.map((task) =>
@@ -43,9 +82,9 @@ export const useTasksAction = (): useTaskActionType => {
 
   const moveTaskCard = (taskId: number, directionNumber: 1 | -1): void => {
     const updatedTasks: Task[] = tasks.map((item) =>
-        item.id === taskId ? { ...item, progressOrder: item.progressOrder+directionNumber } : item,
-      )
-      setTasks(updatedTasks)
+      item.id === taskId ? { ...item, progressOrder: item.progressOrder + directionNumber } : item,
+    )
+    setTasks(updatedTasks)
   }
 
 
@@ -53,5 +92,7 @@ export const useTasksAction = (): useTaskActionType => {
     completeTask,
     moveTaskCard,
     addTask,
+    editTask,
+    deleteTask,
   }
 }
